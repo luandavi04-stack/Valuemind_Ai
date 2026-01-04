@@ -60,4 +60,33 @@ document.querySelector('.btn-rejeitar').onclick = () => processarAcao('rejeitar'
 </script>
 </body>
 </html>
+<button id="btn-aprovar" class="sua-classe-aqui">Aprovar e Enviar</button>
+<button id="btn-rejeitar" class="sua-classe-aqui">Rejeitar</button>
+
+<script>
+    const btnAprovar = document.getElementById('btn-aprovar');
+    const btnRejeitar = document.getElementById('btn-rejeitar');
+
+    function atualizarSinal() {
+        fetch('/api/acao', { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+                // Isso muda o nome do jogo na tela (ajuste a tag se necessário)
+                document.querySelector('h3').innerText = data.jogo;
+                // Isso muda a odd na tela
+                document.querySelector('p').innerText = "Mercado: Over 2.5 Gols | Odd: " + data.odd;
+                console.log("Novo sinal gerado: " + data.jogo);
+            })
+            .catch(err => alert("Erro ao conectar com o servidor."));
+    }
+
+    btnAprovar.onclick = () => {
+        alert("Sinal Enviado!");
+        atualizarSinal();
+    };
+
+    btnRejeitar.onclick = () => {
+        atualizarSinal();
+    };
+</script>
 
