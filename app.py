@@ -1,12 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, send_file
 import os
 
-# Aqui avisamos ao sistema para usar a pasta 'modelos'
-app = Flask(__name__, template_folder='modelos')
+app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('painel.html')
+    # Isso vai ler o seu arquivo HTML mesmo que ele não esteja em pastas
+    return send_file('painel.html')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
