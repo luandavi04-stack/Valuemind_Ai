@@ -1,16 +1,13 @@
-# Lógica do Backend ValueMind AI
-def filtrar_jogos_amanha(grade_jogos):
-    sugestoes = []
-    for jogo in grade_jogos:
-        # Regra 1: Apenas Odd até 3.00
-        # Regra 2: Apenas Confiança Alta (>90%)
-        if jogo['odd'] <= 3.00 and jogo['confianca'] >= 90:
-            sugestoes.append(jogo)
-    return sugestoes
+from flask import Flask, render_template
+import os
 
-def enviar_whatsapp(mensagem, tipo="sinal"):
-    # Aqui conectamos com a API do WhatsApp (Z-API ou Evolution)
-    print(f"Enviando para o grupo: {mensagem}")
+# Aqui avisamos ao sistema para usar a pasta 'modelos'
+app = Flask(__name__, template_folder='modelos')
 
-# Exemplo de Mensagem de Abertura (06:00)
-abertura = "🧠 ValueMind AI\n📖 Salmos 37:5\n🛡️ Gestão: 1% da banca."
+@app.route('/')
+def home():
+    return render_template('painel.html')
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
