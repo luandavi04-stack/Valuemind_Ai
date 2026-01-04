@@ -42,5 +42,22 @@
             </div>
         </div>
     </div>
+    <script>
+function processarAcao(tipo) {
+    fetch('/api/acao', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({acao: tipo}) })
+    .then(response => response.json())
+    .then(data => {
+        // Aqui ele troca o nome do jogo e a odd na sua tela automaticamente
+        document.querySelector('h3').innerText = data.jogo; 
+        document.querySelector('p').innerText = "Mercado: Over 2.5 Gols | Odd: " + data.odd;
+        alert(tipo === 'aprovar' ? "Sinal enviado com sucesso!" : "Sinal descartado.");
+    });
+}
+
+// Conecta os seus botões físicos às funções
+document.querySelector('.btn-aprovar').onclick = () => processarAcao('aprovar');
+document.querySelector('.btn-rejeitar').onclick = () => processarAcao('rejeitar');
+</script>
 </body>
 </html>
+
